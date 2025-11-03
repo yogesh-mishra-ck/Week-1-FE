@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="user-form" action="" style="display: flex; flex-direction: column; width: 400px;">
+
+        <label for="name">Name: </label>
+        <input type="text" id="name">
+        
+
+        <label for="age">Age: </label>
+        <input type="text" id="age" >
+
+        <input type="submit" style="margin-top: 10px;" id="submit">
+    </form>
+</body>
+
+<script>
+
+    document.getElementById("user-form").addEventListener("submit", function(e){
+        e.preventDefault();
+        
+        var name = document.getElementById("name").value.trim();
+        var age =  document.getElementById("age").value;
+
+        if(name === ""){
+            alert("Name is required");
+            return;
+        }
+        if(age < 18){
+            alert("Age must be atleast 18 years old");
+            return;
+        }
+
+        alert(`Name is ${name} and and age is ${age}`);
+
+    })
+
+
+
+
+</script>
+</html>

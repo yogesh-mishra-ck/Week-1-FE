@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+   
+    width: 100vw;
+    height: 100vh;
+}
+
+#productList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.product{
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 400px;
+    height: auto;
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#highestCost{
+    text-align: center;
+}
+
+.hovered{
+    cursor: pointer;
+    background-color: rgb(203, 240, 240);
+    box-shadow: 0 4px 8px rgba(21, 212, 139, 0.2);
+
+}
+
+</style>
+
+<body>
+    <div class="container">
+       
+            <h3 id="highestCost"> </h3>
+
+            <div id="productList">
+            </div>
+
+    </div>
+</body>
+
+<script>
+    
+    function Product(name, price, category){
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+    function getCostliestPrice(costliestText){
+        var maxPrice = 0;
+        this.forEach(function(pd, index){
+            if(pd.price > maxPrice){
+                maxPrice = pd.price
+            }
+        });
+        
+        var highestCostElement = document.getElementById('highestCost');
+        highestCostElement.innerText = costliestText+maxPrice;
+    }
+
+    
+    (function(){
+        
+        var p1 = new Product("Smarphone", 23000, "Electronics");
+        var p2 = new Product("Pasta", 300, "Grocery");
+        var p3 = new Product("Shoes", 3000, "Footwear");
+        var p4 = new Product("Roller", 1200, "Utensils");
+        
+        var productArray = [p1, p2, p3, p4];
+        getCostliestPrice.call(productArray, "Price of costliest product is: ");
+        
+        var products = document.getElementById('productList');
+    
+        products.addEventListener('mouseover', function(e){
+            if(e.target.classList.contains('product')){
+                e.target.classList.add('hovered');
+            }
+        });
+        
+        products.addEventListener('mouseout', function(e){
+            if(e.target.classList.contains('product')){
+                e.target.classList.remove('hovered');
+            }
+        })
+        
+        Product.prototype.getDiscountedPrice = function(percent){
+            return this.price - ( (percent/100) * this.price);
+        }
+        
+        productArray.forEach(function(currProduct, index){
+
+            var newProduct = document.createElement('div');
+
+            var name = document.createElement('p');
+            name.innerText = `Name: ${currProduct.name}`;
+
+            var price = document.createElement('p');
+            price.innerText = `Price: ${currProduct.price}`;
+            price.style = 'text-decoration: line-through';
+
+            var category = document.createElement('p');
+            category.innerText = `Category: ${currProduct.category}`;
+
+            var discountedPrice = document.createElement('p');
+            discountedPrice.innerText = `Discounted Price: ${currProduct.getDiscountedPrice(10)}`;
+
+            newProduct.appendChild(name);
+            newProduct.appendChild(price);
+            newProduct.appendChild(category);
+            newProduct.appendChild(discountedPrice);
+
+            products.appendChild(newProduct);
+            newProduct.classList.add('product');
+
+        });
+    })()
+    
+</script>
+
+</html>

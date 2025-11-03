@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+    .start{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .start button{
+        border-radius: 2px solid black;
+        width: 200px;
+        margin-bottom: 30px;
+        background-color: rgb(82, 235, 82);
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    table,th,td{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<body>
+    <div class="start" id="add">
+        <button>Add Student</button>
+    </div>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Name</th>
+                    <th>English</th>
+                    <th>Hindi</th>
+                    <th>Maths</th>
+                    <th>Science</th>
+                    <th>CS</th>
+                    <th>Total Marks</th>
+                    <th>Average Marks</th>
+                </tr>
+            </thead>
+
+            <tbody class="tbody">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+<script>
+
+    function findTotal(student){
+        var total=0;
+        for(var key in student){
+            if(key != 'name'){
+                total = total+student[key];
+            }
+        }
+        return total
+    }
+
+    function findAverage(totalMarks){
+        return (totalMarks/500)*100;
+    }
+
+    function fillTable(allStudentData){
+
+        var tbody = document.querySelector('.tbody');
+        tbody.innerHTML = ''
+
+        var serial=1;
+        
+        for(var i=0; i<allStudentData.length; i++){
+            var student = allStudentData[i];
+
+            var tr = document.createElement('tr');
+
+            tr.innerHTML = `
+               <td>${serial++}</td>
+               <td>${ student['name'] }</td>
+               <td>${ student['english'] }</td>
+               <td>${ student['hindi'] }</td>
+               <td>${ student['maths'] }</td>
+               <td>${ student['science'] }</td>
+               <td>${ student['cs'] }</td>
+               <td>${ student['total-marks'] }</td>
+               <td>${ student['average'] }</td>
+               `;
+
+
+            tbody.appendChild(tr);
+         };
+
+
+    }
+
+    function inputMarksWithValidation(subject){
+        while(1){
+            var currMarkInput = prompt("Enter marks of the subject: "+subject);
+            if(currMarkInput === null)
+                return null;
+
+            currMarkInput = parseInt(currMarkInput);
+
+            if( (isNaN(currMarkInput) === false) && (currMarkInput>=0 && currMarkInput<=100) ){ //actually a number
+                return currMarkInput;
+            }else{
+                alert("Wrong Input!!! Please enter valid marks in the range of 0 to 100")
+            }
+        }
+    }
+
+    var allStudentData = new Array();
+    var addStudent = document.querySelector("#add");
+
+    addStudent.addEventListener('click', function(e){
+       
+        var tdName = prompt("Enter Name");
+        if(tdName.trim() === ''){
+            alert("Name must not be empty")
+            return;
+        }
+
+        var tdEnglish = inputMarksWithValidation("English");
+        if(tdEnglish === null) return;
+
+        var tdHindi = inputMarksWithValidation("Hindi");
+        if(tdHindi === null) return;
+
+        var tdMaths = inputMarksWithValidation("Maths");
+        if(tdMaths === null) return;
+
+        var tdScience = inputMarksWithValidation("Science");
+        if(tdScience === null) return;
+
+        var tdCS = inputMarksWithValidation("CS");
+        if(tdCS === null) return;
+
+        var student = {};
+        student["name"] = tdName;
+        student["english"] = tdEnglish;
+        student["hindi"] = tdHindi;
+        student["maths"] = tdMaths;
+        student["science"] = tdScience;
+        student["cs"] = tdCS;
+        
+        var totalMarks = findTotal(student);
+        var averageMarks = findAverage(totalMarks).toFixed(2);
+
+        student['total-marks'] = (totalMarks);
+        student['average'] = (averageMarks);
+
+        allStudentData.push(student);
+        localStorage.setItem("student-array", JSON.stringify(allStudentData));
+        
+        fillTable(allStudentData)
+    });
+
+    window.onload = function(){
+        let storedData = localStorage.getItem("student-array");
+        if(storedData){
+            allStudentData = JSON.parse(storedData);
+            fillTable(allStudentData);
+        }
+    }
+</script>
+</html>
