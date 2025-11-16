@@ -132,6 +132,9 @@ body {
   margin-top: 35px;
   align-items: center;
 }
+.community-container .heading-comm {
+  padding-left: 2em;
+}
 .community-container .community-description {
   margin-top: 7px;
 }
@@ -140,7 +143,9 @@ body {
   width: 1440px;
   justify-content: space-between;
   margin-top: 20px;
-  box-shadow: 0px 2px 4px 0px rgba(171, 190, 209, 0.2);
+}
+.community-container .communities .communities-desc {
+  margin-top: 10px;
 }
 .community-container .each-comm {
   border: 2px solid #FFFFFF;
@@ -152,6 +157,15 @@ body {
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.community-container .each-comm .sub-each-comm {
+  margin-bottom: 2px;
+}
+.community-container .each-comm .sub-each-comm h3 {
+  padding-left: 5px;
+}
+.community-container .each-comm .sub-each-comm-container {
+  margin-top: 10px;
 }
 .community-container .each-comm p {
   margin: 0;
@@ -175,6 +189,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.local-business-container .local-left .local-left-heading {
+  color: #4CAF4F;
+}
+.local-business-container .local-left .local-left-p {
+  margin-top: 8px;
 }
 .local-business-container .local-right {
   display: flex;
@@ -237,6 +257,9 @@ body {
   width: 100vw;
   height: 300px;
   background-color: #F5F7FA;
+}
+.footer-up .footer-up-h1-second {
+  padding-left: 40px;
 }
 
 .footer-button {
